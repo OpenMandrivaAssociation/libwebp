@@ -5,7 +5,7 @@
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
 Version:	0.6.1
-Release:	1
+Release:	2
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
@@ -70,7 +70,6 @@ Requires:	%{libname} = %{version}-%{release}
 Requires:	%mklibname webpmux 3
 Requires:	%mklibname webpdemux 2
 Requires:	%mklibname webpdecoder 3
-Requires:	%mklibname webpextras 0
 Provides:	webp-devel = %{version}-%{release}
 
 %description -n %{devname}
