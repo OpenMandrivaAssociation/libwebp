@@ -4,16 +4,13 @@
 
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
-Version:	1.0.3
+Version:	1.1.0
 Release:	1
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
 Url:		http://webmproject.org/
-# https://chromium.googlesource.com/webm/libwebp/
-# Take the last commit from the right branch --
-# https://chromium.googlesource.com/webm/libwebp/+/%{version}
-Source0:	https://chromium.googlesource.com/webm/libwebp/+archive/%{version}.tar.gz
+Source0:	http://storage.googleapis.com/downloads.webmproject.org/releases/webp/%{name}-%{version}.tar.gz
 Patch0:		libwebp-0.6.1-install-extras-lib.patch
 BuildRequires:	libtool
 BuildRequires:	swig
@@ -90,7 +87,7 @@ This package includes the development files for %{name}.
 
 %prep
 %setup -qc %{name}-%{version}
-%apply_patches
+%autopatch -p1
 ./autogen.sh
 
 %build
@@ -102,7 +99,7 @@ export CFLAGS="%{optflags} -frename-registers"
 	--enable-libwebpdemux \
 	--enable-libwebpdecoder \
 	--enable-libwebpextras
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
