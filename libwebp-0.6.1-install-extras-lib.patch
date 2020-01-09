@@ -1,5 +1,6 @@
---- libwebp-0.6.1/extras/Makefile.am.omv~	2018-02-23 23:56:15.690634623 +0100
-+++ libwebp-0.6.1/extras/Makefile.am	2018-02-23 23:57:34.175796031 +0100
+diff -up libwebp-1.1.0/extras/Makefile.am libwebp-1.1.0/extras/Makefile.am-omv
+--- libwebp-1.1.0/extras/Makefile.am    2019-12-21 14:37:43.000000000 +0100
++++ libwebp-1.1.0/extras/Makefile.am-omv        2020-01-09 03:04:54.001902829 +0100
 @@ -1,12 +1,14 @@
  AM_CPPFLAGS += -I$(top_builddir) -I$(top_srcdir)
  AM_CPPFLAGS += -I$(top_builddir)/src -I$(top_srcdir)/src
