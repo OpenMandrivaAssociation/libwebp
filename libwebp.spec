@@ -90,7 +90,6 @@ This package includes the development files for %{name}.
 %autopatch -p0
 
 %build
-autoreconf -vfi
 %ifarch aarch64
 export CFLAGS="%{optflags} -frename-registers"
 %endif
