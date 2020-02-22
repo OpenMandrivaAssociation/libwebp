@@ -11,7 +11,7 @@ Group:		Development/C
 License:	BSD
 Url:		http://webmproject.org/
 Source0:	http://storage.googleapis.com/downloads.webmproject.org/releases/webp/%{name}-%{version}.tar.gz
-Patch0:		libwebp-0.6.1-install-extras-lib.patch
+Patch0:		libwebp-install-extras-lib.patch
 BuildRequires:	libtool
 BuildRequires:	swig
 BuildRequires:	jpeg-devel
@@ -87,7 +87,7 @@ This package includes the development files for %{name}.
 
 %prep
 %setup -qc %{name}-%{version}
-%autopatch -p1
+%autopatch -p0
 ./autogen.sh
 
 %build
