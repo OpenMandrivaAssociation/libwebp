@@ -12,6 +12,7 @@ License:	BSD
 Url:		http://webmproject.org/
 Source0:	http://storage.googleapis.com/downloads.webmproject.org/releases/webp/%{name}-%{version}.tar.gz
 Patch0:		libwebp-install-extras-lib.patch
+BuildRequires:  cmake
 BuildRequires:	libtool
 BuildRequires:	swig
 BuildRequires:	jpeg-devel
@@ -93,11 +94,8 @@ This package includes the development files for %{name}.
 %ifarch aarch64
 export CFLAGS="%{optflags} -frename-registers"
 %endif
-%configure --disable-static \
-	--enable-libwebpmux \
-	--enable-libwebpdemux \
-	--enable-libwebpdecoder \
-	--enable-libwebpextras
+%cmake
+	
 %make_build
 
 %install
