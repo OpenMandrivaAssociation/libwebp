@@ -88,9 +88,9 @@ This package includes the development files for %{name}.
 %prep
 %setup -qc %{name}-%{version}
 %autopatch -p0
-./autogen.sh
 
 %build
+autoreconf -vfi
 %ifarch aarch64
 export CFLAGS="%{optflags} -frename-registers"
 %endif
