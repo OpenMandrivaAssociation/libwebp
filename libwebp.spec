@@ -1,12 +1,19 @@
-%define major 7
+# libgphoto uses libwebp, wine uses libgphoto
+%ifarch %{x86_64}
+%bcond_without compat32
+%endif
+
+%define major 8
 %define libname %mklibname webp %{major}
 %define devname %mklibname -d webp
+%define lib32name %mklib32name webp %{major}
+%define dev32name %mklib32name -d webp
 %define _disable_lto %nil
 
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
 Version:	1.1.0
-Release:	1
+Release:	2
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
@@ -17,6 +24,7 @@ Url:		http://webmproject.org/
 Source0:	https://chromium.googlesource.com/webm/libwebp/+archive/%{version}.tar.gz
 Patch0:		libwebp-0.6.1-install-extras-lib.patch
 Patch1:		libwebp-freeglut.patch
+Patch2:		libwebp-1.1.0-vwebp-compile.patch
 BuildRequires:	libtool
 BuildRequires:	swig
 BuildRequires:	pkgconfig(libpng)
@@ -26,6 +34,15 @@ BuildRequires:	jpeg-devel
 BuildRequires:	png-devel
 BuildRequires:	giflib-devel
 BuildRequires:	tiff-devel
+BuildRequires:	cmake ninja
+%if %{with compat32}
+BuildRequires:	devel(libpng16)
+BuildRequires:	devel(libGL)
+BuildRequires:	devel(libglut)
+BuildRequires:	devel(libjpeg)
+BuildRequires:	devel(libgif)
+BuildRequires:	devel(libtiff)
+%endif
 
 %description
 WebP is an image format that does lossy compression of digital
@@ -66,11 +83,14 @@ images more efficiently.
 
 %files -n %{libname}
 %{_libdir}/%{name}.so.%{major}*
+%{_libdir}/%{name}.so.%{version}
 
 %libpackage webpmux 3
+%{_libdir}/libwebpmux.so.%{version}
 %libpackage webpdemux 2
-%libpackage webpdecoder 3
-%libpackage webpextras 0
+%{_libdir}/libwebpdemux.so.%{version}
+%libpackage webpdecoder 4
+%{_libdir}/libwebpdecoder.so.%{version}
 
 #----------------------------------------------------------------------------
 
@@ -80,8 +100,7 @@ Summary:	Development files for libwebp, a library for the WebP format
 Requires:	%{libname} = %{version}-%{release}
 Requires:	%mklibname webpmux 3
 Requires:	%mklibname webpdemux 2
-Requires:	%mklibname webpdecoder 3
-Requires:	%mklibname webpextras 0
+Requires:	%mklibname webpdecoder 4
 Provides:	webp-devel = %{version}-%{release}
 
 %description -n %{devname}
@@ -92,20 +111,75 @@ This package includes the development files for %{name}.
 %{_libdir}/%{name}*.so
 %{_includedir}/*
 %{_libdir}/pkgconfig/*
+%{_datadir}/WebP
 
 #----------------------------------------------------------------------------
 
+%if %{with compat32}
+%package -n	%{lib32name}
+Group:		Development/C
+Summary:	Library for the WebP format (32-bit)
+
+%description -n %{lib32name}
+WebP is an image format that does lossy compression of digital
+photographic images. WebP consists of a codec based on VP8, and a
+container based on RIFF. Webmasters, web developers and browser
+developers can use WebP to compress, archive and distribute digital
+images more efficiently.
+
+%files -n %{lib32name}
+%{_prefix}/lib/%{name}.so.%{major}*
+%{_prefix}/lib/%{name}.so.%{version}
+
+%lib32package webpmux 3
+%{_prefix}/lib/libwebpmux.so.%{version}
+%lib32package webpdemux 2
+%{_prefix}/lib/libwebpdemux.so.%{version}
+%lib32package webpdecoder 4
+%{_prefix}/lib/libwebpdecoder.so.%{version}
+
+#----------------------------------------------------------------------------
+
+%package -n	%{dev32name}
+Group:		Development/C
+Summary:	Development files for libwebp, a library for the WebP format (32-bit)
+Requires:	%{devname} = %{version}-%{release}
+Requires:	%{lib32name} = %{version}-%{release}
+Requires:	%mklib32name webpmux 3
+Requires:	%mklib32name webpdemux 2
+Requires:	%mklib32name webpdecoder 4
+
+%description -n %{dev32name}
+This package includes the development files for %{name}.
+
+%files -n %{dev32name}
+%{_prefix}/lib/%{name}*.so
+%{_prefix}/lib/pkgconfig/*
+%endif
+
 %prep
-%setup -qc %{name}-%{version}
-%autopatch -p1
+%autosetup -p1 -c %{name}-%{version}
 ./autogen.sh
 
-%build
 %ifarch aarch64
 export CFLAGS="%{optflags} -frename-registers"
 %endif
-%cmake
-%make_build
+
+%if %{with compat32}
+%cmake32 -G Ninja
+cd ..
+%endif
+
+%cmake -G Ninja
+
+%build
+%if %{with compat32}
+%ninja_build -C build32
+%endif
+%ninja_build -C build
 
 %install
-%make_install -C build
+%if %{with compat32}
+%ninja_install -C build32
+%endif
+%ninja_install -C build
