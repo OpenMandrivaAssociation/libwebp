@@ -1,0 +1,43 @@
+diff -up libwebp-1.1.0/src/demux/libwebpdemux.pc.in.omv~ libwebp-1.1.0/src/demux/libwebpdemux.pc.in
+--- libwebp-1.1.0/src/demux/libwebpdemux.pc.in.omv~	2020-07-04 01:35:11.545966838 +0200
++++ libwebp-1.1.0/src/demux/libwebpdemux.pc.in	2020-07-04 01:35:15.944019977 +0200
+@@ -7,5 +7,4 @@ Name: libwebpdemux
+ Description: Library for parsing the WebP graphics format container
+ Version: @PACKAGE_VERSION@
+ Requires: libwebp >= 0.2.0
+-Cflags: -I${includedir}
+-Libs: -L${libdir} -lwebpdemux
++Libs: -lwebpdemux
+diff -up libwebp-1.1.0/src/libwebpdecoder.pc.in.omv~ libwebp-1.1.0/src/libwebpdecoder.pc.in
+--- libwebp-1.1.0/src/libwebpdecoder.pc.in.omv~	2020-07-04 01:34:20.383348308 +0200
++++ libwebp-1.1.0/src/libwebpdecoder.pc.in	2020-07-04 01:34:28.529446828 +0200
+@@ -6,6 +6,5 @@ includedir=@includedir@
+ Name: libwebpdecoder
+ Description: Library for the WebP graphics format (decode only)
+ Version: @PACKAGE_VERSION@
+-Cflags: -I${includedir}
+-Libs: -L${libdir} -lwebpdecoder
++Libs: -lwebpdecoder
+ Libs.private: -lm @PTHREAD_CFLAGS@ @PTHREAD_LIBS@
+diff -up libwebp-1.1.0/src/libwebp.pc.in.omv~ libwebp-1.1.0/src/libwebp.pc.in
+--- libwebp-1.1.0/src/libwebp.pc.in.omv~	2020-07-04 01:34:37.190551559 +0200
++++ libwebp-1.1.0/src/libwebp.pc.in	2020-07-04 01:34:40.590592668 +0200
+@@ -6,6 +6,5 @@ includedir=@includedir@
+ Name: libwebp
+ Description: Library for the WebP graphics format
+ Version: @PACKAGE_VERSION@
+-Cflags: -I${includedir}
+-Libs: -L${libdir} -lwebp
++Libs: -lwebp
+ Libs.private: -lm @PTHREAD_CFLAGS@ @PTHREAD_LIBS@
+diff -up libwebp-1.1.0/src/mux/libwebpmux.pc.in.omv~ libwebp-1.1.0/src/mux/libwebpmux.pc.in
+--- libwebp-1.1.0/src/mux/libwebpmux.pc.in.omv~	2020-07-04 01:35:01.460844963 +0200
++++ libwebp-1.1.0/src/mux/libwebpmux.pc.in	2020-07-04 01:35:06.604907130 +0200
+@@ -7,6 +7,5 @@ Name: libwebpmux
+ Description: Library for manipulating the WebP graphics format container
+ Version: @PACKAGE_VERSION@
+ Requires: libwebp >= 0.2.0
+-Cflags: -I${includedir}
+-Libs: -L${libdir} -lwebpmux
++Libs: -lwebpmux
+ Libs.private: -lm

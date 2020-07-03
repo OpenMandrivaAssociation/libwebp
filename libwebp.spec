@@ -13,7 +13,7 @@
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
 Version:	1.1.0
-Release:	2
+Release:	3
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
@@ -25,6 +25,7 @@ Source0:	https://chromium.googlesource.com/webm/libwebp/+archive/%{version}.tar.
 Patch0:		libwebp-0.6.1-install-extras-lib.patch
 Patch1:		libwebp-freeglut.patch
 Patch2:		libwebp-1.1.0-vwebp-compile.patch
+Patch3:		libwebp-1.1.0-no-useless-L-and-I.patch
 BuildRequires:	libtool
 BuildRequires:	swig
 BuildRequires:	pkgconfig(libpng)
@@ -159,7 +160,6 @@ This package includes the development files for %{name}.
 
 %prep
 %autosetup -p1 -c %{name}-%{version}
-./autogen.sh
 
 %ifarch aarch64
 export CFLAGS="%{optflags} -frename-registers"
@@ -168,6 +168,11 @@ export CFLAGS="%{optflags} -frename-registers"
 %if %{with compat32}
 %cmake32 -G Ninja
 cd ..
+%endif
+
+%if "%{_lib}" != "lib"
+# Fix libdir= in *.pc files
+sed -i -e 's,set(libdir.*,set(libdir "\\\${prefix\}/%{_lib}"),g' CMakeLists.txt
 %endif
 
 %cmake -G Ninja
