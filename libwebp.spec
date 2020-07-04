@@ -13,7 +13,7 @@
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
 Version:	1.1.0
-Release:	3
+Release:	4
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
@@ -99,9 +99,9 @@ images more efficiently.
 Group:		Development/C
 Summary:	Development files for libwebp, a library for the WebP format
 Requires:	%{libname} = %{version}-%{release}
-Requires:	%mklibname webpmux 3
-Requires:	%mklibname webpdemux 2
-Requires:	%mklibname webpdecoder 4
+Requires:	%{mklibname webpmux 3} = %{EVRD}
+Requires:	%{mklibname webpdemux 2} = %{EVRD}
+Requires:	%{mklibname webpdecoder 4} = %{EVRD}
 Provides:	webp-devel = %{version}-%{release}
 
 %description -n %{devname}
