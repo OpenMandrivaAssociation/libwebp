@@ -31,10 +31,10 @@ BuildRequires:	swig
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glut)
-BuildRequires:	jpeg-devel
-BuildRequires:	png-devel
+BuildRequires:	pkgconfig(libjpeg)
+BuildRequires:	pkgconfig(libpng)
 BuildRequires:	giflib-devel
-BuildRequires:	tiff-devel
+BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	cmake ninja
 %if %{with compat32}
 BuildRequires:	devel(libpng16)
