@@ -13,7 +13,7 @@
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
 Version:	1.1.0
-Release:	5
+Release:	6
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
@@ -166,6 +166,8 @@ export CFLAGS="%{optflags} -frename-registers"
 %endif
 
 %if %{with compat32}
+export CC=gcc
+export CXX=g++
 %cmake32 -G Ninja
 cd ..
 %endif
@@ -174,7 +176,8 @@ cd ..
 # Fix libdir= in *.pc files
 sed -i -e 's,set(libdir.*,set(libdir "\\\${prefix\}/%{_lib}"),g' CMakeLists.txt
 %endif
-
+export CC=gcc
+export CXX=g++
 %cmake -G Ninja
 
 %build
