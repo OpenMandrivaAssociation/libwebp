@@ -26,6 +26,7 @@ Patch0:		libwebp-0.6.1-install-extras-lib.patch
 Patch1:		libwebp-freeglut.patch
 Patch2:		libwebp-1.1.0-vwebp-compile.patch
 Patch3:		libwebp-1.1.0-no-useless-L-and-I.patch
+Patch4:           fix-disable-SIMD-on-x86.patch
 BuildRequires:	libtool
 BuildRequires:	swig
 BuildRequires:	pkgconfig(libpng)
