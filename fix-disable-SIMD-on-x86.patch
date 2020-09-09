@@ -1,0 +1,12 @@
+diff -Naur libwebp-1.1.0/cmake/cpu.cmake libwebp-1.1.0-broken-cmake-build-sys/cmake/cpu.cmake
+--- libwebp-1.1.0/cmake/cpu.cmake	2019-12-21 14:37:43.000000000 +0100
++++ libwebp-1.1.0-broken-cmake-build-sys/cmake/cpu.cmake	2020-09-09 17:44:54.989612918 +0200
+@@ -39,7 +39,7 @@
+   set(SIMD_ENABLE_FLAGS
+       "-msse4.1;-msse2;-mips32;-mdspr2;-mfpu=neon;-mmsa")
+   set(SIMD_DISABLE_FLAGS
+-      "-mno-sse4.1;-mno-sse2;;-mno-dspr2;;-mno-msa")
++      "-mno-sse4.1;-mno-sse2;;-mno-avx2;;-mno-avx")
+ endif()
+ 
+ set(WEBP_SIMD_FILES_TO_NOT_INCLUDE)
