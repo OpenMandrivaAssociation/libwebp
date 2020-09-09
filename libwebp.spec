@@ -166,7 +166,8 @@ export CFLAGS="%{optflags} -frename-registers"
 %endif
 
 %if %{with compat32}
-%cmake32 -G Ninja
+%cmake32 -G Ninja \
+         -DWEBP_ENABLE_SIMD=OFF
 cd ..
 %endif
 
@@ -175,7 +176,8 @@ cd ..
 sed -i -e 's,set(libdir.*,set(libdir "\\\${prefix\}/%{_lib}"),g' CMakeLists.txt
 %endif
 
-%cmake -G Ninja
+%cmake -G Ninja \
+       -DWEBP_ENABLE_SIMD=OFF
 
 %build
 %if %{with compat32}
