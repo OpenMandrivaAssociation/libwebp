@@ -6,7 +6,7 @@ diff -up libwebp-1.1.0/cmake/cpu.cmake.omv~ libwebp-1.1.0/cmake/cpu.cmake
        "-msse4.1;-msse2;-mips32;-mdspr2;-mfpu=neon;-mmsa")
    set(SIMD_DISABLE_FLAGS
 -      "-mno-sse4.1;-mno-sse2;;-mno-dspr2;;-mno-msa")
-+      "-mno-sse4.1;-mno-sse2;;;;")
++      "-mno-sse4.1;;;;;")
  endif()
  
  set(WEBP_SIMD_FILES_TO_NOT_INCLUDE)
