@@ -166,16 +166,20 @@ This package includes the development files for %{name}.
 export CFLAGS="%{optflags} -frename-registers"
 %endif
 
-# WEBP_SIMD_FLAGS defaults to SSE41;SSE2;... - currently
-# not supported by every CPU we target with i686 and
-# generic x86_64 builds (but very much supported by
-# znver1, so don't replace x86_64 with %{x86_64} below)
+# libwebp likes to assume everything that has SSE2
+# also has SSE4.1. This is true for znver1 (so don't
+# replace x86_64 below with %{x86_64} below), but not
+# for every old x86_64 CPU we target.
+# We "fix" it by doing a SIMD enabled build, but
+# pretending our compiler doesn't support SSE4.1
+%ifarch x86_64 i686
+sed -i -e 's,-msse4.1,-mno-sse4.1,g;s,SSE41,NOSSE41,g' cmake/cpu.cmake
+sed -i -e 's,__SSE4_1__,NO_WE_DONT_WANT_SSE41,g' src/dsp/dsp.h
+%endif
+
 %if %{with compat32}
 %cmake32 \
-%ifarch x86_64 i686
-	-DWEBP_SIMD_FLAGS="" \
-	-DWEBP_ENABLE_SIMD:BOOL=OFF \
-%else
+%ifarch %{x86_64} %{aarch64} %{arm}
 	-DWEBP_ENABLE_SIMD:BOOL=ON \
 %endif
 	-DOpenGL_GL_Preference=GLVND \
@@ -189,10 +193,7 @@ sed -i -e 's,set(libdir.*,set(libdir "\\\${prefix\}/%{_lib}"),g' CMakeLists.txt
 %endif
 
 %cmake \
-%ifarch x86_64 i686
-	-DWEBP_SIMD_FLAGS="" \
-	-DWEBP_ENABLE_SIMD:BOOL=OFF \
-%else
+%ifarch %{x86_64} %{aarch64} %{arm}
 	-DWEBP_ENABLE_SIMD:BOOL=ON \
 %endif
 	-DOpenGL_GL_Preference=GLVND \
