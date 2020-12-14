@@ -13,7 +13,7 @@
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
 Version:	1.1.0
-Release:	4
+Release:	5
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
@@ -165,8 +165,20 @@ This package includes the development files for %{name}.
 export CFLAGS="%{optflags} -frename-registers"
 %endif
 
+# WEBP_SIMD_FLAGS defaults to SSE41;SSE2;... - currently
+# not supported by every CPU we target with i686 and
+# generic x86_64 builds (but very much supported by
+# znver1, so don't replace x86_64 with %{x86_64} below)
 %if %{with compat32}
-%cmake32 -G Ninja
+%cmake32 \
+%ifarch x86_64 i686
+	-DWEBP_SIMD_FLAGS="" \
+	-DWEBP_ENABLE_SIMD:BOOL=OFF \
+%else
+	-DWEBP_ENABLE_SIMD:BOOL=ON \
+%endif
+	-DOpenGL_GL_Preference=GLVND \
+	-G Ninja
 cd ..
 %endif
 
@@ -175,7 +187,15 @@ cd ..
 sed -i -e 's,set(libdir.*,set(libdir "\\\${prefix\}/%{_lib}"),g' CMakeLists.txt
 %endif
 
-%cmake -G Ninja
+%cmake \
+%ifarch x86_64 i686
+	-DWEBP_SIMD_FLAGS="" \
+	-DWEBP_ENABLE_SIMD:BOOL=OFF \
+%else
+	-DWEBP_ENABLE_SIMD:BOOL=ON \
+%endif
+	-DOpenGL_GL_Preference=GLVND \
+	-G Ninja
 
 %build
 %if %{with compat32}
