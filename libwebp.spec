@@ -203,7 +203,7 @@ sed -i -e 's,set(libdir.*,set(libdir "\\\${prefix\}/%{_lib}"),g' CMakeLists.txt
 %if %{with compat32}
 %ninja_build -C build32
 %endif
-%ninja_build -C build
+%ninja_build -C build -v
 
 %install
 %if %{with compat32}
