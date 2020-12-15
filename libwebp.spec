@@ -192,6 +192,12 @@ cd ..
 sed -i -e 's,set(libdir.*,set(libdir "\\\${prefix\}/%{_lib}"),g' CMakeLists.txt
 %endif
 
+%ifarch x86_64
+# FIXME apparently under some conditions, libwebp built with clang
+# generates instructions not available on all x86_64 CPUs even in Put16_SSE2()
+export CC=gcc
+export CXX=g++
+%endif
 %cmake \
 %ifarch %{x86_64} %{aarch64} %{arm}
 	-DWEBP_ENABLE_SIMD:BOOL=ON \
