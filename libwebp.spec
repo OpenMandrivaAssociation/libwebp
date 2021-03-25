@@ -21,7 +21,7 @@ Url:		http://webmproject.org/
 # https://chromium.googlesource.com/webm/libwebp/
 # Take the last commit from the right branch --
 # https://chromium.googlesource.com/webm/libwebp/+/%{version}
-Source0:	https://chromium.googlesource.com/webm/libwebp/+archive/%{version}.tar.gz
+Source0:	https://chromium.googlesource.com/webm/libwebp/+archive/%{version}/%{name}-%{version}.tar.gz
 Patch0:		libwebp-0.6.1-install-extras-lib.patch
 Patch1:		libwebp-freeglut.patch
 Patch2:		libwebp-1.1.0-vwebp-compile.patch
