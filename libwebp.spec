@@ -3,17 +3,16 @@
 %bcond_without compat32
 %endif
 
-%define major 8
+%define major 7
 %define libname %mklibname webp %{major}
 %define devname %mklibname -d webp
 %define lib32name %mklib32name webp %{major}
 %define dev32name %mklib32name -d webp
-%define _disable_lto %nil
 
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
-Version:	1.1.0
-Release:	5
+Version:	1.2.1
+Release:	1
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
@@ -21,14 +20,10 @@ Url:		http://webmproject.org/
 # https://chromium.googlesource.com/webm/libwebp/
 # Take the last commit from the right branch --
 # https://chromium.googlesource.com/webm/libwebp/+/%{version}
-Source0:	https://chromium.googlesource.com/webm/libwebp/+archive/%{version}.tar.gz
-Patch0:		libwebp-0.6.1-install-extras-lib.patch
-Patch1:		libwebp-freeglut.patch
-Patch2:		libwebp-1.1.0-vwebp-compile.patch
-Patch3:		libwebp-1.1.0-no-useless-L-and-I.patch
-Patch4:		libwebp-1.1.0-fix-disable-SIMD.patch
-BuildRequires:	libtool
+Source0:	http://storage.googleapis.com/downloads.webmproject.org/releases/webp/%{name}-%{version}.tar.gz
+
 BuildRequires:	swig
+BuildRequires:	pkgconfig(sdl2)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glut)
@@ -36,8 +31,10 @@ BuildRequires:	pkgconfig(libjpeg)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	giflib-devel
 BuildRequires:	pkgconfig(libtiff-4)
-BuildRequires:	cmake ninja
+BuildRequires:	cmake
+BuildRequires:	ninja
 %if %{with compat32}
+BuildRequires:	devel(libz)
 BuildRequires:	devel(libpng16)
 BuildRequires:	devel(libGL)
 BuildRequires:	devel(libglut)
@@ -68,11 +65,11 @@ images more efficiently.
 
 %files tools
 %{_bindir}/*
-%{_mandir}/man1/*
+%doc %{_mandir}/man1/*
 
 #----------------------------------------------------------------------------
 
-%package -n	%{libname}
+%package -n %{libname}
 Group:		Development/C
 Summary:	Library for the WebP format
 
@@ -85,7 +82,6 @@ images more efficiently.
 
 %files -n %{libname}
 %{_libdir}/%{name}.so.%{major}*
-%{_libdir}/%{name}.so.%{version}
 
 %libpackage webpmux 3
 %{_libdir}/libwebpmux.so.%{version}
@@ -96,7 +92,7 @@ images more efficiently.
 
 #----------------------------------------------------------------------------
 
-%package -n	%{devname}
+%package -n %{devname}
 Group:		Development/C
 Summary:	Development files for libwebp, a library for the WebP format
 Requires:	%{libname} = %{version}-%{release}
@@ -118,7 +114,7 @@ This package includes the development files for %{name}.
 #----------------------------------------------------------------------------
 
 %if %{with compat32}
-%package -n	%{lib32name}
+%package -n %{lib32name}
 Group:		Development/C
 Summary:	Library for the WebP format (32-bit)
 
@@ -131,7 +127,6 @@ images more efficiently.
 
 %files -n %{lib32name}
 %{_prefix}/lib/%{name}.so.%{major}*
-%{_prefix}/lib/%{name}.so.%{version}
 
 %lib32package webpmux 3
 %{_prefix}/lib/libwebpmux.so.%{version}
@@ -142,7 +137,7 @@ images more efficiently.
 
 #----------------------------------------------------------------------------
 
-%package -n	%{dev32name}
+%package -n %{dev32name}
 Group:		Development/C
 Summary:	Development files for libwebp, a library for the WebP format (32-bit)
 Requires:	%{devname} = %{version}-%{release}
@@ -160,7 +155,7 @@ This package includes the development files for %{name}.
 %endif
 
 %prep
-%autosetup -p1 -c %{name}-%{version}
+%autosetup -p1
 
 %ifarch aarch64
 export CFLAGS="%{optflags} -frename-registers"
@@ -192,12 +187,6 @@ cd ..
 sed -i -e 's,set(libdir.*,set(libdir "\\\${prefix\}/%{_lib}"),g' CMakeLists.txt
 %endif
 
-%ifarch x86_64
-# FIXME apparently under some conditions, libwebp built with clang
-# generates instructions not available on all x86_64 CPUs even in Put16_SSE2()
-export CC=gcc
-export CXX=g++
-%endif
 %cmake \
 %ifarch %{x86_64} %{aarch64} %{arm}
 	-DWEBP_ENABLE_SIMD:BOOL=ON \
