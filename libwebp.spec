@@ -84,11 +84,8 @@ images more efficiently.
 %{_libdir}/%{name}.so.%{major}*
 
 %libpackage webpmux 3
-%{_libdir}/libwebpmux.so.%{version}
 %libpackage webpdemux 2
-%{_libdir}/libwebpdemux.so.%{version}
 %libpackage webpdecoder 4
-%{_libdir}/libwebpdecoder.so.%{version}
 
 #----------------------------------------------------------------------------
 
@@ -129,11 +126,9 @@ images more efficiently.
 %{_prefix}/lib/%{name}.so.%{major}*
 
 %lib32package webpmux 3
-%{_prefix}/lib/libwebpmux.so.%{version}
 %lib32package webpdemux 2
-%{_prefix}/lib/libwebpdemux.so.%{version}
 %lib32package webpdecoder 4
-%{_prefix}/lib/libwebpdecoder.so.%{version}
+
 
 #----------------------------------------------------------------------------
 
