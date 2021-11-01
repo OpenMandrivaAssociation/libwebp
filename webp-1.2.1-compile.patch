@@ -1,0 +1,12 @@
+diff -up libwebp-1.2.1/CMakeLists.txt.omv~ libwebp-1.2.1/CMakeLists.txt
+--- libwebp-1.2.1/CMakeLists.txt.omv~	2021-11-01 19:39:32.787826270 +0100
++++ libwebp-1.2.1/CMakeLists.txt	2021-11-01 19:39:47.106307108 +0100
+@@ -529,7 +529,7 @@ if(WEBP_BUILD_VWEBP)
+     target_link_libraries(vwebp
+                           ${OPENGL_LIBRARIES}
+                           exampleutil
+-                          ${GLUT_glut_LIBRARY}
++                          ${GLUT_glut_LIBRARY} glut
+                           imageioutil
+                           webp
+                           webpdemux)

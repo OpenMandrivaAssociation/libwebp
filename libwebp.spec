@@ -21,6 +21,7 @@ Url:		http://webmproject.org/
 # Take the last commit from the right branch --
 # https://chromium.googlesource.com/webm/libwebp/+/%{version}
 Source0:	http://storage.googleapis.com/downloads.webmproject.org/releases/webp/%{name}-%{version}.tar.gz
+Patch0:		webp-1.2.1-compile.patch
 
 BuildRequires:	swig
 BuildRequires:	pkgconfig(sdl2)
@@ -85,7 +86,7 @@ images more efficiently.
 
 %libpackage webpmux 3
 %libpackage webpdemux 2
-%libpackage webpdecoder 4
+%libpackage webpdecoder 3
 
 #----------------------------------------------------------------------------
 
@@ -95,7 +96,7 @@ Summary:	Development files for libwebp, a library for the WebP format
 Requires:	%{libname} = %{version}-%{release}
 Requires:	%{mklibname webpmux 3} = %{EVRD}
 Requires:	%{mklibname webpdemux 2} = %{EVRD}
-Requires:	%{mklibname webpdecoder 4} = %{EVRD}
+Requires:	%{mklibname webpdecoder 3} = %{EVRD}
 Provides:	webp-devel = %{version}-%{release}
 
 %description -n %{devname}
@@ -127,7 +128,7 @@ images more efficiently.
 
 %lib32package webpmux 3
 %lib32package webpdemux 2
-%lib32package webpdecoder 4
+%lib32package webpdecoder 3
 
 
 #----------------------------------------------------------------------------
@@ -139,7 +140,7 @@ Requires:	%{devname} = %{version}-%{release}
 Requires:	%{lib32name} = %{version}-%{release}
 Requires:	%mklib32name webpmux 3
 Requires:	%mklib32name webpdemux 2
-Requires:	%mklib32name webpdecoder 4
+Requires:	%mklib32name webpdecoder 3
 
 %description -n %{dev32name}
 This package includes the development files for %{name}.
