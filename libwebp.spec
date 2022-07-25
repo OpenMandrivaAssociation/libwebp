@@ -103,7 +103,7 @@ Provides:	webp-devel = %{version}-%{release}
 This package includes the development files for %{name}.
 
 %files -n %{devname}
-%doc README PATENTS COPYING NEWS AUTHORS
+%doc README* PATENTS COPYING NEWS AUTHORS
 %{_libdir}/%{name}*.so
 %{_includedir}/*
 %{_libdir}/pkgconfig/*
