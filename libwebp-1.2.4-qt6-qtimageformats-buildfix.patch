@@ -1,0 +1,14 @@
+diff -up libwebp-1.2.4/cmake/deps.cmake.omv~ libwebp-1.2.4/cmake/deps.cmake
+--- libwebp-1.2.4/cmake/deps.cmake.omv~	2022-10-01 13:04:28.129984054 +0200
++++ libwebp-1.2.4/cmake/deps.cmake	2022-10-01 13:06:29.520556703 +0200
+@@ -45,7 +45,9 @@ if(WEBP_USE_THREAD)
+         }
+       " FLAG_HAVE_PTHREAD_PRIO_INHERIT)
+     set(HAVE_PTHREAD_PRIO_INHERIT ${FLAG_HAVE_PTHREAD_PRIO_INHERIT})
+-    list(APPEND WEBP_DEP_LIBRARIES Threads::Threads)
++    # Breaks qt6-qtimageformats build, and isn't needed since
++    # all libcs we care about integrate libpthread
++    #list(APPEND WEBP_DEP_LIBRARIES Threads::Threads)
+   endif()
+   set(WEBP_USE_THREAD ${Threads_FOUND})
+ endif()

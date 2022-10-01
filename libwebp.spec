@@ -12,7 +12,7 @@
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
 Version:	1.2.4
-Release:	1
+Release:	2
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
@@ -22,6 +22,7 @@ Url:		http://webmproject.org/
 # https://chromium.googlesource.com/webm/libwebp/+/%{version}
 Source0:	http://storage.googleapis.com/downloads.webmproject.org/releases/webp/%{name}-%{version}.tar.gz
 Patch0:		webp-1.2.1-compile.patch
+Patch1:		libwebp-1.2.4-qt6-qtimageformats-buildfix.patch
 
 BuildRequires:	swig
 BuildRequires:	pkgconfig(sdl2)
