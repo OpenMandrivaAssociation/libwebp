@@ -84,6 +84,7 @@ images more efficiently.
 
 %files -n %{libname}
 %{_libdir}/%{name}.so.%{major}*
+%{_libdir}/libsharpyuv.so.0*
 
 %libpackage webpmux 3
 %libpackage webpdemux 2
@@ -106,6 +107,7 @@ This package includes the development files for %{name}.
 %files -n %{devname}
 %doc README* PATENTS COPYING NEWS AUTHORS
 %{_libdir}/%{name}*.so
+%{_libdir}/libsharpyuv.so
 %{_includedir}/*
 %{_libdir}/pkgconfig/*
 %{_datadir}/WebP
@@ -126,6 +128,7 @@ images more efficiently.
 
 %files -n %{lib32name}
 %{_prefix}/lib/%{name}.so.%{major}*
+%{_prefix}/lib/libsharpyuv.so.0*
 
 %lib32package webpmux 3
 %lib32package webpdemux 2
@@ -148,6 +151,7 @@ This package includes the development files for %{name}.
 
 %files -n %{dev32name}
 %{_prefix}/lib/%{name}*.so
+%{_prefix}/lib/libsharpyuv.so
 %{_prefix}/lib/pkgconfig/*
 %endif
 
