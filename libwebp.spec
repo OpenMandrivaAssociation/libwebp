@@ -21,7 +21,7 @@ Url:		http://webmproject.org/
 # Take the last commit from the right branch --
 # https://chromium.googlesource.com/webm/libwebp/+/%{version}
 Source0:	http://storage.googleapis.com/downloads.webmproject.org/releases/webp/%{name}-%{version}.tar.gz
-Patch0:		webp-1.2.1-compile.patch
+#Patch0:		webp-1.2.1-compile.patch
 Patch1:		libwebp-1.2.4-qt6-qtimageformats-buildfix.patch
 
 BuildRequires:	swig
