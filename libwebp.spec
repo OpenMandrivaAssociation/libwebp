@@ -4,15 +4,17 @@
 %endif
 
 %define major 7
-%define libname %mklibname webp %{major}
+%define oldlibname %mklibname webp 7
+%define libname %mklibname webp
 %define devname %mklibname -d webp
-%define lib32name %mklib32name webp %{major}
+%define oldlib32name %mklib32name webp 7
+%define lib32name %mklib32name webp
 %define dev32name %mklib32name -d webp
 
 Summary:	Library and tools for the WebP graphics format
 Name:		libwebp
 Version:	1.3.0
-Release:	2
+Release:	3
 Group:		Development/C
 # Additional IPR is licensed as well. See PATENTS file for details
 License:	BSD
@@ -44,6 +46,10 @@ BuildRequires:	devel(libjpeg)
 BuildRequires:	devel(libgif)
 BuildRequires:	devel(libtiff)
 %endif
+%if %{with compat32}
+# Ugly, but lib32name == src.rpm name
+%rename %{oldlib32name}
+%endif
 
 %description
 WebP is an image format that does lossy compression of digital
@@ -74,6 +80,7 @@ images more efficiently.
 %package -n %{libname}
 Group:		Development/C
 Summary:	Library for the WebP format
+%rename %{oldlibname}
 
 %description -n %{libname}
 WebP is an image format that does lossy compression of digital
@@ -96,9 +103,9 @@ images more efficiently.
 Group:		Development/C
 Summary:	Development files for libwebp, a library for the WebP format
 Requires:	%{libname} = %{version}-%{release}
-Requires:	%{mklibname webpmux 3} = %{EVRD}
-Requires:	%{mklibname webpdemux 2} = %{EVRD}
-Requires:	%{mklibname webpdecoder 3} = %{EVRD}
+Requires:	%{mklibname webpmux} = %{EVRD}
+Requires:	%{mklibname webpdemux} = %{EVRD}
+Requires:	%{mklibname webpdecoder} = %{EVRD}
 Provides:	webp-devel = %{version}-%{release}
 
 %description -n %{devname}
@@ -115,25 +122,13 @@ This package includes the development files for %{name}.
 #----------------------------------------------------------------------------
 
 %if %{with compat32}
-%package -n %{lib32name}
-Group:		Development/C
-Summary:	Library for the WebP format (32-bit)
-
-%description -n %{lib32name}
-WebP is an image format that does lossy compression of digital
-photographic images. WebP consists of a codec based on VP8, and a
-container based on RIFF. Webmasters, web developers and browser
-developers can use WebP to compress, archive and distribute digital
-images more efficiently.
-
-%files -n %{lib32name}
+%files
 %{_prefix}/lib/%{name}.so.%{major}*
 %{_prefix}/lib/libsharpyuv.so.0*
 
 %lib32package webpmux 3
 %lib32package webpdemux 2
 %lib32package webpdecoder 3
-
 
 #----------------------------------------------------------------------------
 
@@ -142,9 +137,9 @@ Group:		Development/C
 Summary:	Development files for libwebp, a library for the WebP format (32-bit)
 Requires:	%{devname} = %{version}-%{release}
 Requires:	%{lib32name} = %{version}-%{release}
-Requires:	%mklib32name webpmux 3
-Requires:	%mklib32name webpdemux 2
-Requires:	%mklib32name webpdecoder 3
+Requires:	%mklib32name webpmux
+Requires:	%mklib32name webpdemux
+Requires:	%mklib32name webpdecoder
 
 %description -n %{dev32name}
 This package includes the development files for %{name}.
